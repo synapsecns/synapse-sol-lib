@@ -48,7 +48,7 @@ jobs:
             LICENSE
             README.md
 
-      - name: Publish to NPM
-        run: yarn publish --non-interactive --tag latest
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_SERVICE_ACCOUNT_TOKEN }}
+#      - name: Publish to NPM
+#        run: yarn publish --non-interactive --tag latest
+#        env:
+#          NODE_AUTH_TOKEN: ${{ secrets.NPM_SERVICE_ACCOUNT_TOKEN }}
