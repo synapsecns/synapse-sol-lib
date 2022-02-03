@@ -25,7 +25,7 @@ walk_dir () {
           ;;
         *)
           dir_name=$(remove_pwd "$pathname")
-           mkdir -p "$ABI_OUT_DIR/$dir_name"
+          mkdir -p "$ABI_OUT_DIR/$dir_name"
       esac
       walk_dir "$pathname"
     else
@@ -33,7 +33,7 @@ walk_dir () {
         *.dbg.json)
           ;;
         *.json)
-          sol_name=$(echo "$pathname" | ggrep -Eoe "([A-Za-z0-9]+\.sol)")
+          sol_name=$(echo "$pathname" | grep -Eoe "([A-Za-z0-9]+\.sol)")
           path_name=$(remove_pwd "$pathname")
           path_name=$(echo "$path_name" | sed s+"/$sol_name"++)
           path_name="$ABI_OUT_DIR/$path_name"
