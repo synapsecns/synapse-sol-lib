@@ -1,0 +1,54 @@
+name: Publish (mainline)
+
+on:
+  push:
+    tags:
+      - "v*"
+      - "!v*-dev*"
+
+jobs:
+  tagged_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 17
+          cache: "yarn"
+          registry-url: "https://registry.npmjs.org"
+          scope: "@synapseprotocol"
+
+      - name: Yarn Install
+        run: yarn install --frozen-lockfile
+
+      - name: Hardhat compile
+        run: yarn hardhat compile
+
+      - name: Set tagname in env
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+
+      - name: Make artifacts tarball
+        run: ./scripts/make_abi_tarball.sh ${{ steps.vars.outputs.tag }}
+
+      - name: Create release with tarball
+        uses: "marvinpinto/action-automatic-releases@v1.2.1"
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: false
+          automatic_release_tag: ${{ steps.vars.outputs.tag }}
+          files: |
+            abis_${{ steps.vars.outputs.tag }}.tar.gz
+            LICENSE
+            README.md
+
+      - name: Publish to NPM
+        run: yarn publish --non-interactive --tag latest
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_SERVICE_ACCOUNT_TOKEN }}

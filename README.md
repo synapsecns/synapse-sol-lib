@@ -1,4 +1,4 @@
-# @synapsecns/sol-lib
+# @synapseprotocol/sol-lib
 
 Various base contracts, libraries, and more used by Synapse Protocol. 
 

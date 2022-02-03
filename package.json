@@ -1,5 +1,5 @@
 {
-  "name": "@synapsecns/sol-lib",
+  "name": "@synapseprotocol/sol-lib",
   "version": "0.1.2",
   "description": "Solidity libraries and base contracts used by Synapse",
   "main": "index.js",
@@ -7,6 +7,18 @@
   "author": "bleaker0x",
   "license": "MIT",
   "private": false,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "files": [
+    "/contracts",
+    "/artifacts",
+    "/LICENSE",
+    "/README.md",
+    "/tsconfig.json",
+    "/package.json"
+  ],
   "dependencies": {
     "@openzeppelin/contracts-solc6": "npm:@openzeppelin/contracts@^3",
     "@openzeppelin/contracts-solc8": "npm:@openzeppelin/contracts@latest",
