@@ -1,20 +1,21 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.6.12;
+pragma solidity >=0.6.12;
 pragma experimental ABIEncoderV2;
 
 library Bytes {
-    function bytesToAddress(uint _offst, bytes memory _input)
+    function toBytes(address x)
+        internal
+        pure
+        returns (bytes memory b)
+    {
+        b = new bytes(32);
+        assembly { mstore(add(b, 32), x) }
+    }
+
+    function toAddress(uint _offst, bytes memory _input)
         internal
         pure
         returns (address _output)
-    {
-        assembly { _output := mload(add(_input, _offst)) }
-    }
-
-    function bytesToUint256(uint _offst, bytes memory _input)
-        internal
-        pure
-        returns (uint256 _output)
     {
         assembly { _output := mload(add(_input, _offst)) }
     }
@@ -28,13 +29,12 @@ library Bytes {
         assembly { mstore(add(b, 32), x) }
     }
 
-    function toBytes(address x)
+    function toUint256(uint _offst, bytes memory _input)
         internal
         pure
-        returns (bytes memory b)
+        returns (uint256 _output)
     {
-        b = new bytes(32);
-        assembly { mstore(add(b, 32), x) }
+        assembly { _output := mload(add(_input, _offst)) }
     }
 
     function mergeBytes(bytes memory a, bytes memory b)
